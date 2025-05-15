@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🚨 DANGER ZONE - Sistema de Controle de Perigos</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+  <div class="danger-container">
+    <!-- Cabeçalho -->
+    <header class="danger-header">
+      <div class="header-warning-stripes"></div>
+      <div class="logo-container">
+        <i class="fas fa-radiation danger-icon"></i>
+        <h1>DANGER ZONE</h1>
+        <i class="fas fa-biohazard danger-icon"></i>
+      </div>
+      <p class="system-subtitle">SISTEMA DE CONTROLE DE PERIGOS</p>
+      <div class="security-level">
+        <select id="security-level-select">
+          <option value="1">Nível de Segurança: 1</option>
+          <option value="2">Nível de Segurança: 2</option>
+          <option value="3">Nível de Segurança: 3</option>
+          <option value="4">Nível de Segurança: 4</option>
+          <option value="5">Nível de Segurança: 5</option>
+        </select>
+      </div>
+      <div class="stats-container">
+        <div class="stat-box extreme">
+          <span class="stat-label">CRÍTICOS:</span>
+          <span class="stat-value" id="extreme-count">0</span>
+        </div>
+        <div class="stat-box high">
+          <span class="stat-label">GRAVES:</span>
+          <span class="stat-value" id="high-count">0</span>
+        </div>
+        <div class="stat-box moderate">
+          <span class="stat-label">MODERADOS:</span>
+          <span class="stat-value" id="moderate-count">0</span>
+        </div>
+        <div class="stat-box low">
+          <span class="stat-label">BAIXOS:</span>
+          <span class="stat-value" id="low-count">0</span>
+        </div>
+      </div>
+      <div class="header-warning-stripes"></div>
+    </header>
+
+    <!-- Painel Principal -->
+    <main class="danger-main">
+      <!-- Controles de API -->
+      <div class="api-selector">
+        <h2>INTERFACE DE CONTROLE</h2>
+        <div class="selector-container">
+          <label class="radio-container">
+            <input type="radio" name="api-type" value="rest" checked>
+            <span class="custom-radio"></span>
+            API REST
+          </label>
+          <label class="radio-container">
+            <input type="radio" name="api-type" value="graphql">
+            <span class="custom-radio"></span>
+            API GraphQL
+          </label>
+        </div>
+      </div>
+
+      <!-- Formulário de Registro de Perigo -->
+      <div class="danger-form-container">
+        <h2>
+          <i class="fas fa-exclamation-triangle"></i>
+          REGISTRAR NOVO PERIGO
+          <i class="fas fa-exclamation-triangle"></i>
+        </h2>
+        <form id="danger-form">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="title">TÍTULO DO PERIGO:</label>
+              <input type="text" id="title" required placeholder="Identifique o perigo">
+            </div>
+            
+            <div class="form-group">
+              <label for="description">DESCRIÇÃO DETALHADA:</label>
+              <textarea id="description" placeholder="Detalhe o perigo e procedimentos de prevenção"></textarea>
+            </div>
+            
+            <div class="form-group">
+              <label for="risk-level">NÍVEL DE RISCO:</label>
+              <select id="risk-level" required>
+                <option value="" disabled selected>Selecione o nível</option>
+                <option value="extreme">EXTREMO - Ameaça à vida</option>
+                <option value="high">ALTO - Danos graves</option>
+                <option value="moderate">MODERADO - Lesões possíveis</option>
+                <option value="low">BAIXO - Precaução necessária</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="category">CATEGORIA:</label>
+              <select id="category" required>
+                <option value="" disabled selected>Selecione a categoria</option>
+                <option value="chemical">QUÍMICO</option>
+                <option value="electrical">ELÉTRICO</option>
+                <option value="mechanical">MECÂNICO</option>
+                <option value="biological">BIOLÓGICO</option>
+                <option value="radiation">RADIAÇÃO</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="location">LOCALIZAÇÃO EXATA:</label>
+              <input type="text" id="location" required placeholder="Local exato do perigo">
+            </div>
+            
+            <div class="form-group">
+              <label for="consequence">CLASSIFICAÇÃO DE CONSEQUÊNCIA (1-10):</label>
+              <input type="number" id="consequence" min="1" max="10" value="5" required>
+            </div>
+          </div>
+          
+          <button type="submit" class="submit-btn">
+            <i class="fas fa-radiation"></i>
+            REGISTRAR PERIGO
+            <i class="fas fa-radiation"></i>
+          </button>
+        </form>
+      </div>
+
+      <!-- Lista de Perigos -->
+      <div class="danger-list-container">
+        <div class="list-header">
+          <h2>
+            <i class="fas fa-clipboard-list"></i>
+            REGISTRO DE PERIGOS ATIVOS
+            <i class="fas fa-clipboard-list"></i>
+          </h2>
+          <div class="filter-controls">
+            <select id="filter-risk">
+              <option value="">Todos os níveis</option>
+              <option value="extreme">Extremo</option>
+              <option value="high">Alto</option>
+              <option value="moderate">Moderado</option>
+              <option value="low">Baixo</option>
+            </select>
+            <select id="filter-category">
+              <option value="">Todas as categorias</option>
+              <option value="chemical">Químico</option>
+              <option value="electrical">Elétrico</option>
+              <option value="mechanical">Mecânico</option>
+              <option value="biological">Biológico</option>
+              <option value="radiation">Radiação</option>
+            </select>
+            <button id="apply-filters" class="filter-btn">APLICAR FILTROS</button>
+          </div>
+        </div>
+        
+        <div id="dangers-container" class="dangers-grid">
+          <!-- Os perigos serão inseridos aqui dinamicamente -->
+          <div class="no-dangers-message">
+            <i class="fas fa-check-circle"></i>
+            NENHUM PERIGO REGISTRADO NO SISTEMA
+            <i class="fas fa-check-circle"></i>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="danger-footer">
+      <div class="footer-warning-stripes"></div>
+      <p>SISTEMA DE CONTROLE DE PERIGOS - ACESSO RESTRITO</p>
+      <p id="system-time">Data do sistema: --/--/---- --:--:--</p>
+      <div class="footer-warning-stripes"></div>
+    </footer>
+
+    <!-- Modal de confirmação para exclusão -->
+    <div id="confirm-modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>⚠️ CONFIRMAÇÃO DE REMOÇÃO DE PERIGO ⚠️</h2>
+        </div>
+        <div class="modal-body">
+          <p>ATENÇÃO: Você está prestes a remover um registro de perigo do sistema.</p>
+          <p>Esta ação é irreversível e será registrada nos logs de segurança.</p>
+          <p>Deseja prosseguir?</p>
+        </div>
+        <div class="modal-footer">
+          <button id="cancel-delete" class="modal-btn cancel-btn">CANCELAR</button>
+          <button id="confirm-delete" class="modal-btn confirm-btn">CONFIRMAR REMOÇÃO</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notificação de alerta -->
+    <div id="alert-notification" class="notification">
+      <div class="notification-content">
+        <i class="fas fa-exclamation-circle"></i>
+        <span id="notification-message"></span>
+      </div>
+    </div>
+  </div>
+
+  <script src="scripts.js"></script>
+</body>
+</html>

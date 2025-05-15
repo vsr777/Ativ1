@@ -1,0 +1,20 @@
+{
+  "dependencies": {
+    "apollo-server": "^3.13.0",
+    "graphql": "^16.11.0",
+    "node": "^24.0.1",
+    "server.js": "^1.0.0",
+    "uuid": "^11.1.0"
+  },
+  "name": "graphql",
+  "version": "1.0.0",
+  "main": "schema.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
